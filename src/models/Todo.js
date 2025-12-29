@@ -10,18 +10,23 @@ const todoSchema = new mongoose.Schema({
         required: true
     },
     priority: {
-        type: Number,
-        enum: [1, 2, 3],
-        default: 1
+        type: String,
+        enum: ["low", "medium", "high"],
+        default: "low"
     },
     status: {
-        type: Number,
-        enum: [1, 2, 3],
-        default: 1
+        type: String,
+        enum: ["todo", "doing", "done"],
+        default: "todo"
     },
     category: {
         type: Schema.Types.ObjectId,
         ref: "Category"
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 }, { timestamps: false, versionKey: false })
 const Todo = mongoose.model("Todo", todoSchema)

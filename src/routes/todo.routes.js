@@ -1,19 +1,20 @@
 import Router from "express";
 
 import validBodyRequest from "../middlewares/validBodyRequest.js";
-import { createCategory, deleteCategory, getCategories, getCategory, updateCategory } from "../controllers/category.controller.js";
 import { todoCreateSchema, todoUpdateSchema } from "../schemas/todo.schema.js";
+import { createTodo, deleteTodo, getTodo, getTodos, updateTodo } from "../controllers/todo.controller.js";
+import auth from "../middlewares/auth.js";
 
 const todoRoutes = Router();
 
-todoRoutes.post("/", validBodyRequest(todoCreateSchema), createCategory);
-todoRoutes.get("/", getCategories);
-todoRoutes.get("/:id", getCategory);
+todoRoutes.post("/", validBodyRequest(todoCreateSchema), createTodo);
+todoRoutes.get("/", getTodos);
+todoRoutes.get("/:id", getTodo);
 todoRoutes.patch(
     "/:id",
     validBodyRequest(todoUpdateSchema),
-    updateCategory
+    updateTodo
 );
-todoRoutes.delete("/:id", deleteCategory);
+todoRoutes.delete("/:id", deleteTodo);
 
 export default todoRoutes;

@@ -20,8 +20,8 @@ export const createUser = handleAsync(async (req, res) => {
     }
     const hash = bcrypt.hashSync(password, 10)
     const newUser = await User.create({ email, password: hash, username })
-    newUser.password = null
-    return createResponse(res, 201, "Create Sucessfull", newUser)
+    const { password: pssw, ...userWithoutPassword } = newUser.toObject()
+    return createResponse(res, 201, "Create Sucessfull", userWithoutPassword)
 })
 
 
@@ -32,9 +32,7 @@ export const updateUser = handleAsync(async (req, res) => {
 
 export const login = handleAsync(async (req, res) => {
     const { email, password } = req.body
-    console.log(req.body)
-    const isExist = await findOne({ email })
-    console.log(isExist)
+    const isExist = await User.findOne({ email })
     if (!isExist)
         return createError(res, 404, "Login info wrong")
     const isMatched = bcrypt.compareSync(password, isExist.password)
