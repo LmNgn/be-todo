@@ -7,6 +7,9 @@ import { HOST, PORT } from "./src/configs/dotenvConfig.js";
 const app = express();
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Server test OK ✅");
+});
 connectDB();
 
 app.use("/", router);
