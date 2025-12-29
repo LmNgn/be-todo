@@ -3,10 +3,10 @@ import router from "./src/routes/index.js";
 import connectDB from "./src/configs/connectDB.js";
 import notFoundRequest from "./src/middlewares/notFoundRequest.js";
 import { HOST, PORT } from "./src/configs/dotenvConfig.js";
-
+import cors from "cors"
 const app = express();
 app.use(express.json());
-
+app.use(cors())
 app.get("/", (req, res) => {
   res.send("Server test OK ✅");
 });
